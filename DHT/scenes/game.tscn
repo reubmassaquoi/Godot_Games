@@ -1,0 +1,153 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://assets/test_room_tiles.tres" type="TileSet" id=1]
+[ext_resource path="res://scripts/player_controller.gd" type="Script" id=2]
+[ext_resource path="res://assets/char_atlas.png" type="Texture" id=3]
+[ext_resource path="res://scripts/interactions.gd" type="Script" id=4]
+[ext_resource path="res://scripts/dialog_create.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 9.28574
+
+[sub_resource type="CircleShape2D" id=3]
+
+custom_solver_bias = 0.0
+radius = 11.88
+
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 8.23764
+
+[node name="game" type="Node2D"]
+
+z/relative = false
+
+[node name="room" type="TileMap" parent="."]
+
+transform/pos = Vector2( -200, -16 )
+mode = 0
+tile_set = ExtResource( 1 )
+cell/size = Vector2( 32, 32 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = true
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( 327692, 0, 327693, 0, 327694, 0, 327695, 0, 327696, 0, 327697, 0, 327698, 0, 327699, 0, 327700, 0, 327701, 0, 327702, 0, 393228, 0, 393238, 0, 458764, 0, 458774, 0, 524300, 0, 524310, 0, 589836, 0, 589846, 0, 655372, 0, 655382, 0, 720908, 0, 720918, 0, 786444, 0, 786454, 0, 851980, 0, 851990, 0, 917516, 0, 917526, 0, 983052, 0, 983053, 0, 983054, 0, 983055, 0, 983056, 0, 983059, 0, 983060, 0, 983061, 0, 983062, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="player" type="KinematicBody2D" parent="room"]
+
+transform/pos = Vector2( 656, 352 )
+transform/scale = Vector2( 0.375, 0.25 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 3.03875, 0, 0, 4.13774, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="room/player"]
+
+transform/pos = Vector2( 0, -64 )
+transform/scale = Vector2( 0.666667, 1 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 1, 1, 128, 200 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="collision" type="CollisionShape2D" parent="room/player"]
+
+transform/scale = Vector2( 3.03875, 4.13774 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="player_area" type="Area2D" parent="room/player"]
+
+transform/pos = Vector2( 0, -64 )
+transform/scale = Vector2( 1.16667, 1 )
+input/pickable = true
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 5.94507, 0, 0, 10.9415, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="interaction_radius" type="CollisionShape2D" parent="room/player/player_area"]
+
+transform/scale = Vector2( 5.94507, 10.9415 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="npc" type="KinematicBody2D" parent="room" groups=[
+"interactable",
+]]
+
+transform/pos = Vector2( 560, 352 )
+transform/scale = Vector2( 0.4375, 0.25 )
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 2.84757, 0, 0, 4.6273, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="room/npc"]
+
+transform/pos = Vector2( 0, -64 )
+transform/scale = Vector2( 0.571429, 1 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 131, 1, 128, 200 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="collision" type="CollisionShape2D" parent="room/npc"]
+
+transform/scale = Vector2( 2.84757, 4.6273 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="interaction_master" type="Node2D" parent="."]
+
+script/script = ExtResource( 4 )
+
+[node name="dialog_master" type="Node2D" parent="interaction_master"]
+
+script/script = ExtResource( 5 )
+
+[node name="dialog" type="Node2D" parent="."]
+
+[connection signal="body_enter" from="room/player/player_area" to="interaction_master" method="_on_player_area_body_enter"]
+
+[connection signal="body_enter" from="room/player/player_area" to="room/player" method="_on_player_area_body_enter"]
+
+

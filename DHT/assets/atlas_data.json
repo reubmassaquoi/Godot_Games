@@ -1,0 +1,30 @@
+{"frames": [
+
+{
+	"filename": "char1.png",
+	"frame": {"x":1,"y":1,"w":128,"h":200},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":200},
+	"sourceSize": {"w":128,"h":200},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "npc1.png",
+	"frame": {"x":131,"y":1,"w":128,"h":200},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":200},
+	"sourceSize": {"w":128,"h":200},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_data.png",
+	"format": "RGBA8888",
+	"size": {"w":260,"h":202},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:96caaa04f4767df63923a69ec19acacc:89f2d2fee3fcdf3c5366576a34b05522:5a0ddefd4d2ec783d4cc24204fa6b8d7$"
+}
+}
