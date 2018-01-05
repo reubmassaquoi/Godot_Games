@@ -1,0 +1,201 @@
+[gd_scene load_steps=11 format=1]
+
+[ext_resource path="res://scenes/root.gd" type="Script" id=1]
+[ext_resource path="res://test_tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://scripts/player_controller.gd" type="Script" id=3]
+[ext_resource path="res://subscenes/test_char.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/atlas_data.png" type="Texture" id=5]
+[ext_resource path="res://scripts/chamber.gd" type="Script" id=6]
+[ext_resource path="res://subscenes/test_debris.tscn" type="PackedScene" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 22.254, 17.3764 )
+
+[node name="root" type="Node2D"]
+
+script/script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TileMap" type="TileMap" parent="."]
+
+transform/pos = Vector2( -549, 1 )
+mode = 0
+tile_set = ExtResource( 2 )
+cell/size = Vector2( 32, 32 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.05
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( 327680, 0, 327681, 0, 327682, 0, 393216, 0, 393217, 0, 393218, 0, 458752, 0, 458753, 0, 458754, 0, 524288, 0, 524289, 0, 524290, 0, 589824, 0, 589825, 0, 589826, 0, 655360, 0, 655361, 0, 655362, 0, 655381, 0, 655382, 0, 655383, 0, 655384, 0, 655385, 0, 720896, 0, 720897, 0, 720898, 0, 720917, 0, 720921, 0, 786432, 0, 786433, 0, 786434, 0, 786453, 0, 786457, 0, 851968, 0, 851969, 0, 851970, 0, 851989, 0, 851993, 0, 917504, 0, 917505, 0, 917506, 0, 917507, 0, 917508, 0, 917509, 0, 917510, 0, 917511, 0, 917512, 0, 917513, 0, 917514, 0, 917515, 0, 917516, 0, 917517, 0, 917518, 0, 917519, 0, 917520, 0, 917521, 0, 917522, 0, 917523, 0, 917524, 0, 917525, 0, 917526, 0, 917527, 0, 917528, 0, 917529, 0, 917530, 0, 917531, 0, 917532, 0, 917533, 0, 983040, 0, 983041, 0, 983042, 0, 983043, 0, 983044, 0, 983045, 0, 983046, 0, 983047, 0, 983048, 0, 983049, 0, 983050, 0, 983051, 0, 983052, 0, 983053, 0, 983054, 0, 983055, 0, 983056, 0, 983057, 0, 983058, 0, 983059, 0, 983060, 0, 983061, 0, 983062, 0, 983063, 0, 983064, 0, 983065, 0, 983066, 0, 983067, 0, 983068, 0, 983069, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="player" type="KinematicBody2D" parent="TileMap"]
+
+visibility/behind_parent = true
+transform/pos = Vector2( 417, 382.5 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 2.5, 0, 0, 4.2903, 2.49999, -7.72612 )
+shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 15, -3 )
+shapes/1/trigger = true
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 3 )
+
+[node name="bone_sprite" parent="TileMap/player" instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 4, -15 )
+transform/scale = Vector2( 0.4, 0.4 )
+
+[node name="collision_body" type="CollisionShape2D" parent="TileMap/player"]
+
+visibility/behind_parent = true
+transform/pos = Vector2( 2.49999, -7.72612 )
+transform/scale = Vector2( 2.5, 4.2903 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="weapon" type="CollisionShape2D" parent="TileMap/player"]
+
+visibility/visible = false
+transform/pos = Vector2( 15, -3 )
+shape = SubResource( 2 )
+trigger = true
+_update_shape_index = 1
+
+[node name="Sprite" type="Sprite" parent="TileMap/player/weapon"]
+
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )
+offset = Vector2( 12.6695, 1.10199 )
+region = true
+region_rect = Rect2( 1, 203, 160, 80 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="shoot_ray" type="RayCast2D" parent="TileMap/player/weapon"]
+
+transform/pos = Vector2( 50, 2 )
+transform/scale = Vector2( 1, 0.163141 )
+enabled = true
+cast_to = Vector2( 500, 0 )
+layer_mask = 1
+type_mask = 15
+
+[node name="chamber" type="Node2D" parent="TileMap/player/weapon"]
+
+script/script = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Position2D" type="Position2D" parent="TileMap"]
+
+transform/pos = Vector2( 573, 229.5 )
+
+[node name="Camera2D" type="Camera2D" parent="TileMap/Position2D"]
+
+transform/pos = Vector2( -6.10352e-05, -2.08548 )
+transform/scale = Vector2( 0.718751, 0.622328 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit/left = -10000
+limit/top = -10000
+limit/right = 10000
+limit/bottom = 10000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = true
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="test_debris" parent="TileMap" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 569, 222 )
+
+[node name="test_enemy" type="RigidBody2D" parent="TileMap" groups=[
+"tossable",
+]]
+
+editor/display_folded = true
+transform/pos = Vector2( 171, 401 )
+input/pickable = false
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 2.2715, 1, 7.52948 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 2
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 10.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+velocity/linear = Vector2( 0, 0 )
+velocity/angular = 0.0
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="Sprite" type="Sprite" parent="TileMap/test_enemy"]
+
+transform/scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 5 )
+region = true
+region_rect = Rect2( 134, 1, 128, 200 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="collision" type="CollisionShape2D" parent="TileMap/test_enemy"]
+
+transform/pos = Vector2( 1, 7.52948 )
+transform/scale = Vector2( 1, 2.2715 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
+__meta__ = {
+"_edit_lock_": true
+}
+
+

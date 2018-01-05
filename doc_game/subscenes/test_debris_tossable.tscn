@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://assets/divided_textures/debris1.png" type="Texture" id=1]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 6.44348, -5.57175, 8.93947, 4.48451, 5.54817, 9.29941, -5.08696, 9.10223, -10.4475, 1.50386, -5.08696, -8.5524 )
+
+[node name="test_debris" type="RigidBody2D" groups=[
+"tossable",
+]]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 4.42308, 0, 0, 4.36146, 3.5, -0.25 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+one_way_collision/max_depth = 2.0
+mode = 2
+mass = 0.102041
+friction = 0.6
+bounce = 0.05
+gravity_scale = 10.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+velocity/linear = Vector2( 0, 0 )
+velocity/angular = 0.0
+damp_override/linear = 0.0
+damp_override/angular = -1.0
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+
+[node name="collision" type="CollisionPolygon2D" parent="."]
+
+transform/pos = Vector2( 3.5, -0.25 )
+transform/scale = Vector2( 4.42308, 4.36146 )
+build_mode = 0
+polygon = Vector2Array( -5.08696, -8.5524, -10.4475, 1.50386, -5.08696, 9.10223, 5.54817, 9.29941, 8.93947, 4.48451, 6.44348, -5.57175 )
+shape_range = Vector2( 0, 0 )
+trigger = false
+
+
